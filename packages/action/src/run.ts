@@ -75,7 +75,7 @@ export async function run() {
     repo,
   });
 
-  if (!schemaPointer || (!oldSchemaPointer && !newSchemaPointer)) {
+  if (!schemaPointer && (!oldSchemaPointer && !newSchemaPointer)) {
     core.error('No `schema` or `old-schema-path` and `new-schema-path` provided');
     return core.setFailed('Failed to find `schema` or `old-schema-path` and `new-schema-path`');
   }
