@@ -136,8 +136,9 @@ export async function run() {
 
   const isNewSchemaUrl = endpoint && schemaPath.startsWith('http');
 
-  let oldFile, newFile 
+  let oldFile, newFile;
   if(schemaPointer){
+    core.debug(`Reading from schemaPointer. schemaRef: ${schemaRef}, schemaPath: ${schemaPath}`);
     [oldFile, newFile] = await Promise.all([
       endpoint
         ? printSchemaFromEndpoint(endpoint)
@@ -154,6 +155,7 @@ export async function run() {
           }),
     ]);
   } else {
+    core.debug(`Reading from local files. oldSchemaPointer: ${oldSchemaPointer}, newSchemaPointer: ${newSchemaPointer}`); 
     // read from local file path oldSchemaPointer and newSchemaPointer into strings [oldFile, newFile]
     [oldFile, newFile] = await Promise.all([
       loadFile({
@@ -162,7 +164,7 @@ export async function run() {
         workspace,
       }),
       loadFile({
-        ref: ref,
+        ref,
         path: newSchemaPointer,
         workspace,
       }),
